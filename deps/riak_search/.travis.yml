@@ -1,0 +1,12 @@
+language: erlang
+notifications:
+  webhooks: http://basho-engbot.herokuapp.com/travis?key=a62d725727d2f3019d4a2670d0af4cc695330644
+  email: eng@basho.com
+before_script:
+  - "ulimit -n 4096"
+otp_release:
+  - R15B01
+  - R15B
+  - R14B04
+  - R14B03
+

@@ -1,0 +1,13 @@
+{application, clique,
+ [
+  {description, "A CLI library for erlang"},
+  {vsn, git},
+  {modules, []},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, {clique_app, []}},
+  {env, []}
+ ]}.

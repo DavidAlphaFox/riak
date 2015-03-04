@@ -1,0 +1,7 @@
+{application, neotoma,
+ [
+  {description, "PEG/Packrat toolkit and parser-generator."},
+  {vsn, git},
+  {applications, [kernel, stdlib]}
+ ]
+}.

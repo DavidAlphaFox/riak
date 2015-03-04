@@ -1,0 +1,10 @@
+{application, canola,
+ [
+  {description, "PAM port for Erlang"},
+  {vsn, git},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.

@@ -1,0 +1,30 @@
+<div id="header">
+    <div id="navbar">
+        <a id="riak-control-logo"></a>
+        <nav>
+            <ul id="nav-ul">
+                <li id="nav-ring" class="nav-li">{{#linkTo "ring" classNames="gui-text-bold nav-item"}}{{/linkTo}}<span class="indicator"></span></li>
+                <li id="nav-nodes" class="nav-li">{{#linkTo "nodes" classNames="gui-text-bold nav-item"}}{{/linkTo}}<span class="indicator"></span></li>
+                <li id="nav-cluster" class="nav-li">{{#linkTo "cluster" classNames="gui-text-bold nav-item"}}{{/linkTo}}<span class="indicator"></span></li>
+                <li id="nav-snapshot" class="nav-li">{{#linkTo "snapshot" classNames="gui-text-bold nav-item"}}{{/linkTo}}<span class="indicator"></span></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div id="wrapper" class="split gui-text">
+
+    <section id="content-well">{{outlet}}</section>
+
+    <footer>
+        <div class="side-line"></div>
+        <div class="title-box">
+            <span class="vert-border-left"></span>
+            <a id="basho-logo" href="http://www.basho.com" target="_blank"><img src="/admin/ui/images/basho-logo.png" alt=""/></a>
+            <span class="vert-border-right"></span>
+        </div>
+        <div class="side-line"></div>
+        <div class="clear"></div>
+    <footer>
+
+</div><!-- #wrapper -->

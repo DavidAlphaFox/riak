@@ -1,0 +1,14 @@
+{application, riak_control,
+ [
+  {description, "Riak Admin Interface"},
+  {vsn, git},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  webmachine,
+                  riak_core
+                 ]},
+  {mod, { riak_control_app, []}},
+  {env, []}
+ ]}.

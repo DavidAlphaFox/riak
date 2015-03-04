@@ -1,0 +1,53 @@
+#+STYLE: <style>
+#+STYLE: h1.title {
+#+STYLE:     font-family:'HelveticaNeue-Light','Helvetica Neue Light','Helvetica Neue',Arial,Helvetica,sans-serif;
+#+STYLE:     padding: 20px;
+#+STYLE:     font-size: 3em;
+#+STYLE:     line-height: 3em;
+#+STYLE:     font-weight: 300;
+#+STYLE:     border-bottom: solid 1px black;
+#+STYLE: }
+#+STYLE:  
+#+STYLE: h2 {
+#+STYLE:     font-family:'HelveticaNeue-Light','Helvetica Neue Light','Helvetica Neue',Arial,Helvetica,sans-serif;
+#+STYLE:     font-size: 1.8em;
+#+STYLE:     line-height: 1.8em;
+#+STYLE:     font-weight:300;
+#+STYLE:     padding: 20px 0px 0px 0px;
+#+STYLE: }
+#+STYLE:  
+#+STYLE: h3 {
+#+STYLE:     font-family:'HelveticaNeue-Light','Helvetica Neue Light','Helvetica Neue',Arial,Helvetica,sans-serif;
+#+STYLE:     font-size:1.4em;
+#+STYLE:     line-height: 1.4em;
+#+STYLE:     font-weight:300;
+#+STYLE:     color: #306990
+#+STYLE: }
+#+STYLE:  
+#+STYLE: body {
+#+STYLE:     font-family: "Helvetica", San-Serif;
+#+STYLE:     font-size: 90%;
+#+STYLE:     line-height: 160%;
+#+STYLE:     margin: 50px;
+#+STYLE: }
+#+STYLE:  
+#+STYLE: li { padding: 3px 0px 3px 0px; }
+#+STYLE:  
+#+STYLE: a { text-decoration: none; }
+#+STYLE: a:hover { text-decoration: underline; }
+#+STYLE: </style>
+#+LANGUAGE:     en
+#+LATEX_HEADER: \usepackage{color}
+#+LATEX_HEADER: \usepackage{sectsty}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage{cmbright}
+#+LATEX_HEADER: \usepackage[left=1in,top=1in,right=1in,bottom=1in, nohead]{geometry}
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \setlength\parindent{0in}
+#+LATEX_HEADER: \setlength\parskip{0.1in}
+#+LATEX_HEADER:\sectionfont{\pagebreak\fontfamily{iwona}\Huge\selectfont}
+#+LATEX_HEADER:\subsectionfont{\fontfamily{iwona}\color[rgb]{0.18,0.41,0.56}\selectfont}
+#+LATEX_HEADER:\hypersetup{pdfborder={0 0 0 0}, colorlinks=true, linkcolor=[rgb]{0.80,0.44,0.02},urlcolor=[rgb]{0.80,0.44,0.02}}
+#+STYLE: <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+#+OPTIONS:      H:3 toc:2 num:t
