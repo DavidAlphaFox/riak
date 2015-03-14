@@ -54,7 +54,8 @@
 -endif.
 
 -export_type([vclock/0, timestamp/0, vclock_node/0, dot/0, pure_dot/0]).
-
+%定义vclock类型
+%vclock = [{term(),{integer(),integer()}}]
 -type vclock() :: [dot()].
 -type dot() :: {vclock_node(), {counter(), timestamp()}}.
 -type pure_dot() :: {vclock_node(), counter()}.
@@ -63,7 +64,7 @@
 -type   vclock_node() :: term().
 -type   counter() :: integer().
 -type   timestamp() :: integer().
-
+%创建一个空List
 % @doc Create a brand new vclock.
 -spec fresh() -> vclock().
 fresh() ->
@@ -72,7 +73,7 @@ fresh() ->
 -spec fresh(vclock_node(), counter()) -> vclock().
 fresh(Node, Count) ->
     [{Node, {Count, timestamp()}}].
-
+%计算Va是否是Vb的后裔
 % @doc Return true if Va is a direct descendant of Vb, else false -- remember, a vclock is its own descendant!
 -spec descends(Va :: vclock(), Vb :: vclock()) -> boolean().
 descends(_, []) ->
@@ -80,10 +81,13 @@ descends(_, []) ->
     true;
 descends(Va, Vb) ->
     [{NodeB, {CtrB, _T}}|RestB] = Vb,
+    %在Va中寻找Vb的最后一个节点
     case lists:keyfind(NodeB, 1, Va) of
         false ->
             false;
         {_, {CtrA, _TSA}} ->
+        %Va的counter必须要大于等于Vb的counter
+        %同时Va也必须是Vb剩余节点的后裔节点
             (CtrA >= CtrB) andalso descends(Va,RestB)
         end.
 
