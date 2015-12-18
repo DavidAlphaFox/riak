@@ -407,10 +407,12 @@ handle_cast({unregister, Index, Mod, Pid}, #state{idxtab=T} = State) ->
 handle_cast({vnode_event, Mod, Idx, Pid, Event}, State) ->
     handle_vnode_event(Event, Mod, Idx, Pid, State);
 handle_cast(force_handoffs, State) ->
+	%% 得到所有的虚拟节点
     AllVNodes = get_all_vnodes(),
     {ok, Ring, CHBin} = riak_core_ring_manager:get_raw_ring_chashbin(),
+	%% 更新handoff信息
     State2 = update_handoff(AllVNodes, Ring, CHBin, State),
-
+	%% 看是否需要触发handoff
     _ = [maybe_trigger_handoff(Mod, Idx, Pid, State2)
          || {Mod, Idx, Pid} <- AllVNodes],
 
@@ -707,6 +709,9 @@ change_forward(VNodes, Mod, Idx, ForwardTo) ->
     end.
 
 update_handoff(AllVNodes, Ring, CHBin, State) ->
+	%% 只有Riak的Ring处在Ready的状态
+	%% 才会进行handoff
+	%% 那么Ring什么状态可以称为Ready呢
     case riak_core_ring:ring_ready(Ring) of
         false ->
             State;
@@ -725,12 +730,13 @@ update_handoff(AllVNodes, Ring, CHBin, State) ->
                                    end || {Mod, Idx, _Pid} <- AllVNodes]),
             State#state{handoff=dict:from_list(NewHO)}
     end.
-
 should_handoff(Ring, _CHBin, Mod, Idx) ->
+	%% 计算新的Owner
     {_, NextOwner, _} = riak_core_ring:next_owner(Ring, Idx),
     Type = riak_core_ring:vnode_type(Ring, Idx),
     Ready = riak_core_ring:ring_ready(Ring),
     IsResizing = riak_core_ring:is_resizing(Ring),
+	%% 决定handoff的目标节点 
     case determine_handoff_target(Type, NextOwner, Ready, IsResizing) of
         undefined ->
             false;

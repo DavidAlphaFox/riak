@@ -520,6 +520,7 @@ active({send_manager_event, Event}, State) ->
     continue(State2);
 active({trigger_handoff, TargetNode}, State) ->
     active({trigger_handoff, State#state.index, TargetNode}, State);
+%% 出发handoff事件
 active({trigger_handoff, TargetIdx, TargetNode}, State) ->
      maybe_handoff(TargetIdx, TargetNode, State);
 active(trigger_delete, State=#state{mod=Mod,modstate=ModState,index=Idx}) ->
@@ -910,7 +911,7 @@ terminate(Reason, _StateName, #state{mod=Mod, modstate=ModState,
 
 code_change(_OldVsn, StateName, State, _Extra) ->
     {ok, StateName, State}.
-
+%% 可能需要迁移
 maybe_handoff(_TargetIdx, _TargetNode, State=#state{modstate={deleted, _}}) ->
     %% Modstate has been deleted, waiting for unregistered.  No handoff.
     continue(State);
