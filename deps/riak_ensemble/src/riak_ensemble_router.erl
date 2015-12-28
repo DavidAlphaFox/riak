@@ -27,12 +27,19 @@
 %% and not registered names, and therefore Erlang's built-in messaging
 %% cannot directly address ensemble peers.
 %%
+%% 该模块主要将请求路由消息到leader上，即便这个这个Requests并不是来自于
+%% ensemble集群中
+%%
 %% This routing layer is handled by multiple instances of this module
 %% that run on each node in the ensemble cluster. A request is sent to
 %% a random router on a given node, which then looks up the ensemble
 %% leader using its local `riak_ensemble_manager' state, routing the
 %% request directly to a local pid (if the leader is local) or forwarding
 %% on to a router on the respective leading node.
+%%
+%% 该路由层在每个节点上都会有多个实例来完成路由
+%% 请求可以随机发送到指定节点上的任意一个路由
+%% 通过查询本地的riak_ensemble_manager来决定是发送到本地，还是发送到远程的节点
 %%
 %% The reason for running multiple router instances per node is to enable
 %% additional concurrency and not have a single router bottleneck traffic.
@@ -41,7 +48,10 @@
 %% of `gen_fsm:send_sync_event' that converts timeouts into error tuples
 %% rather than exit conditions, as well as discarding late/delayed messages.
 %% This isolation is provided by spawning an intermediary proxy process.
-
+%%
+%% 另一个原因，是为了提供隔离的gen_fsm:send_sync_event
+%% 将异常退出，转化成超时异常
+%%
 -module(riak_ensemble_router).
 -compile(export_all).
 -behaviour(gen_server).
@@ -160,6 +170,7 @@ noconnect_cast(Dest, Msg) ->
     end.
 
 %% TODO: Switch to using sidejob_config or copy thereof
+%% 创建7个Routers
 routers() ->
     {riak_ensemble_router_1,
      riak_ensemble_router_2,

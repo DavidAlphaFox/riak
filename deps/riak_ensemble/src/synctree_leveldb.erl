@@ -51,6 +51,8 @@
 %% to keep track of shared LevelDB references. Having riak_ensemble_sup
 %% own the ETS table ensures it survives as long as riak_ensemble is up.
 -spec init_ets() -> ok.
+%% 创建一个公有的ETS，用来存储LevelDB的引用
+%% 这个ETS绑定在riak_ensemble_sup上，只要riak_ensemble_sup酒
 init_ets() ->
     _ = ets:new(?MODULE, [named_table, set, public,
                           {read_concurrency, true},
