@@ -191,7 +191,8 @@ maybe_schedule_sync(State=#state{timer=undefined}) ->
     State#state{timer=Timer};
 maybe_schedule_sync(State) ->
     State.
-
+%% 当收到timeout的消息
+%% 立刻开始进行同步
 -spec do_sync(state()) -> state().
 do_sync(State=#state{savefile=File, waiting=Waiting, previous=PrevData}) ->
     Data = term_to_binary(ets:tab2list(?ETS)),
