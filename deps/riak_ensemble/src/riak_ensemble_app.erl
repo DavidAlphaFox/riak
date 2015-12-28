@@ -33,3 +33,15 @@ start(_StartType, _StartArgs) ->
 
 stop(_State) ->
     ok.
+%%% 
+%%% riak_ensemble is a consensus library that supports creating multiple consensus groups (ensembles). 
+%%% Each ensemble is a separate Multi-Paxos instance with its own leader, set of members, and state.
+%%% 
+%%% 集群一致性的library，提供了多个共存一致性的组
+%%% 每个一致性组都是使用Paxos协议的节点，都会拥有自己的leader
+%%% kafka也使用了类似的技术，不过选主的过程需要依赖Zookeeper
+%%% 大家选择这么做，都是因为防止数据丢失
+%%% 由于Paxos选主的影响，不可能无限的添加节点
+%%% 所以将数据进行分片，每一个分片都有自己的Leader和Follower
+%%% 这样就可以做到每个局部区域都是in-sync replicas
+%%% 就是用分区来防止全局不可用

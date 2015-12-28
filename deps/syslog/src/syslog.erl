@@ -23,7 +23,7 @@
 %% @doc erlang wrapper for syslog port
 
 -module(syslog).
-
+%%% 直接将日志打入syslog中
 -behaviour(gen_server).
 
 -define(DRV_NAME, "syslog_drv").

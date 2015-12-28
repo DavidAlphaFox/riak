@@ -24,7 +24,8 @@
 %%%-----------------------------------------------------------------
 
 -module(folsom_vm_metrics).
-
+%%% folsom的vm_metrics已经非常完善了
+%%% Erlang的很多工程可以直接拿来用了
 -export([get_system_info/0,
          get_statistics/0,
          get_memory/0,
