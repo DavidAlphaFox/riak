@@ -27,6 +27,11 @@
 %% second, overwhelming the I/O subsystem. To solve this issue, this storage
 %% manager was created.
 %%
+%% 该模块实现了中央存储。在此之前，每个ensembles都是由ensembles_manager
+%% 独立保存自己的状态到磁盘上，但是这样做扩展起来非常困难
+%% 并且很多时候，我们并不会看到每秒上千次的同步IO，如果真的是这样
+%% 那很容易让IO系统过载
+%%
 %% Rather than storing data independently, the storage manager combines the
 %% state from multiple ensembles as well as the ensemble manager into a
 %% single entity that is stored together in a single file. Since this file
@@ -34,9 +39,16 @@
 %% new {@link riak_ensemble_save} logic to save this data to disk such that
 %% there are four redundant copies to recover from.
 %%
+%% storage manager 将多个ensembles的状态合并成一条独立的条目，并保存到一个文件中。
+%% 由于这个文件是一个SPOF，所以storage manager使用riak_ensemble_save进行持久化
+%% 并写入4份冗余，以备恢复
+%%
 %% This manager is also responsible for coalescing multiple writes together
 %% to reduce disk traffic. Individual writes are staged in an ETS table and
 %% then flushed to disk after a delay (eg. 50ms).
+%%
+%% 这个manager负责将多个写入汇总，从而减少磁盘的操作。
+%% 单个写入会被缓存在ETS中，然后大约50ms后写入磁盘
 %%
 %% There are two ways to save data to disk that are used by other components
 %% in riak_ensemble: synchronous and asynchronous.
