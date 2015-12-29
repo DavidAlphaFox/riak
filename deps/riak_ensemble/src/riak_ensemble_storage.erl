@@ -195,11 +195,16 @@ maybe_schedule_sync(State) ->
 %% 立刻开始进行同步
 -spec do_sync(state()) -> state().
 do_sync(State=#state{savefile=File, waiting=Waiting, previous=PrevData}) ->
+	%% 将ETS的数据编程列表
     Data = term_to_binary(ets:tab2list(?ETS)),
     case Data of
+		%% 数据是一致的
+		%% 就不需要保存
         PrevData ->
             ok;
         _ ->
+			%% 数据是不一致的，需要刷盘
+			%% 此处刷盘非常严格
             ok = riak_ensemble_save:write(File, Data)
     end,
     _ = [gen_server:reply(From, ok) || From <- Waiting],
