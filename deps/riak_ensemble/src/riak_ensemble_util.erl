@@ -34,6 +34,7 @@
 %%===================================================================
 
 -spec replace_file(file:filename(), iodata()) -> ok | {error, term()}.
+%% 将文件刷盘
 replace_file(FN, Data) ->
     TmpFN = FN ++ ".tmp",
     {ok, FH} = file:open(TmpFN, [write, raw]),
@@ -42,6 +43,7 @@ replace_file(FN, Data) ->
         ok = file:sync(FH),
         ok = file:close(FH),
         ok = file:rename(TmpFN, FN),
+		%% 读盘判断写入成功
         {ok, Contents} = read_file(FN),
         true = (Contents == iolist_to_binary(Data)),
         ok
