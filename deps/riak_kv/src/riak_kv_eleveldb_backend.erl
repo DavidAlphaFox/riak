@@ -559,6 +559,7 @@ data_size(State) ->
 %% @private
 init_state(DataRoot, Config) ->
     %% Get the data root directory
+    %% 确保目录存在
     filelib:ensure_dir(filename:join(DataRoot, "dummy")),
 
     %% Merge the proplist passed in from Config with any values specified by the

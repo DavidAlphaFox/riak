@@ -62,6 +62,7 @@ active_owners(Ring, UpNodes) ->
 %% Get the active preflist taking account of which nodes are up
 -spec get_apl(docidx(), n_val(), atom()) -> preflist().
 get_apl(DocIdx, N, Service) ->
+    %% 先得到一致性Hash的集合
     {ok, CHBin} = riak_core_ring_manager:get_chash_bin(),
     get_apl_chbin(DocIdx, N, CHBin, riak_core_node_watcher:nodes(Service)).
 
@@ -91,9 +92,13 @@ get_apl_ann(DocIdx, N, UpNodes) ->
 -spec get_apl_ann_chbin(binary(), n_val(), chashbin(), [node()]) -> preflist_ann().
 get_apl_ann_chbin(DocIdx, N, CHBin, UpNodes) ->
     UpNodes1 = UpNodes,
+    %% 遍历一致性hash，先获得iterator
     Itr = chashbin:iterator(DocIdx, CHBin),
+    %% 得出前N个一致性Hash
     {Primaries, Itr2} = chashbin:itr_pop(N, Itr),
+    %% 检查是否存活
     {Up, Pangs} = check_up(Primaries, UpNodes1, [], []),
+    %% 找出备份节点
     Up ++ find_fallbacks_chbin(Pangs, Itr2, UpNodes1, []).
 
 %% Get the active preflist taking account of which nodes are up
